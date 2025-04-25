@@ -1,0 +1,14 @@
+openai
+crewai
+crewai[tools]
+langchain
+streamlit
+python-dotenv
+pathlib
+textwrap
+chromadb
+pdfkit 
+markdown
+langchain_community
+langchain-chroma
+numpy
