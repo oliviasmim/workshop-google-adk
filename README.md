@@ -5,7 +5,7 @@
 [Agent Development Kit](https://github.com/google/adk-python) (ADK) is an open-source toolkit for building, evaluating,
 and deploying AI agents.
 
-This repository is a collection of ADK samples/tutorials to get you up to speed.
+This repository is a collection of ADK demos.
 
 ## Set Python environment
 
@@ -72,12 +72,19 @@ Enable Vertex AI API:
 gcloud services enable aiplatform.googleapis.com
 ```
 
+## Credits
+
+Some folders and examples (e.g. `travel_helper/`) were from  
+[adk-demos](https://github.com/meteatamel/adk-demos) by  
+[Mate Atamel](https://github.com/meteatamel).  
+Special thanks to Mate for open‑sourcing his work!
+
 ## References
 
+- [MAIN REFERENCE Github: ADK Demos - Mate Atamel](https://github.com/meteatamel/adk-demos)
 - [Documentation: Agent Development Kit](https://google.github.io/adk-docs/)
 - [GitHub: ADK Python repository](https://github.com/google/adk-python)
 - [GitHub: ADK samples repository](https://github.com/google/adk-samples)
-- [Github: ADK Demos - Mate Atamel](https://github.com/meteatamel/adk-demos)
 - [Blog: From Zero to Multi-Agents: A Beginner’s Guide to Google Agent Development Kit (ADK)](https://medium.com/@sokratis.kartakis/from-zero-to-multi-agents-a-beginners-guide-to-google-agent-development-kit-adk-b56e9b5f7861)
 - [GitHub: Google ADK Walkthrough: Your Step-by-Step Development Tutorial](https://github.com/sokart/adk-walkthrough/tree/main)
 - [Blog: Agent Development Kit: Making it easy to build multi-agent applications](https://developers.googleblog.com/en/agent-development-kit-easy-to-build-multi-agent-applications/)
@@ -85,5 +92,5 @@ gcloud services enable aiplatform.googleapis.com
 
 ---
 
-This is not an official Google product.
-This content is for educational purposes only, the code used from references is not owned by the author, and the author has any intentions to use it for commercial purposes.
+This is not an official Google product.  
+Content is for educational purposes only; referenced code is not owned by the author and is not intended for commercial use.
