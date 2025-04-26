@@ -6,6 +6,8 @@ from google.adk.agents import Agent
 BASE_GEO_URL     = "https://geocoding-api.open-meteo.com/v1/search"
 BASE_FORECAST_URL= "https://api.open-meteo.com/v1/forecast"
 BASE_TZ_URL      = "https://api.open-meteo.com/v1/timezone"
+TIME_API_URL     = "https://timeapi.io/api/time/current/zone"
+
 TIMEOUT          = 5
 _session         = requests.Session()
 
@@ -17,7 +19,7 @@ def _geocode_city(city: str) -> Tuple[float, float]:
     if not results:
         raise ValueError(f"City '{city}' not found.")
     loc = results[0]
-    return loc["latitude"], loc["longitude"]
+    return loc["latitude"], loc["longitude"], loc["timezone"]
 
 # --- tools ---
 def get_weather(city: str) -> Dict[str, Any]:
@@ -40,12 +42,23 @@ def get_weather(city: str) -> Dict[str, Any]:
 
 def get_current_time(city: str) -> Dict[str, Any]:
     try:
-        lat, lon = _geocode_city(city)
-        resp = _session.get(BASE_TZ_URL, params={"latitude": lat, "longitude": lon}, timeout=TIMEOUT)
+        lat, lon, tz = _geocode_city(city)
+        resp = _session.get(TIME_API_URL, params={"timeZone": tz}, timeout=TIMEOUT)
         resp.raise_for_status()
-        tz = resp.json()
-        report = f"The current time in {city} is {tz.get('current_time')} ({tz.get('timezone')})."
-        return {"status": "success", "report": report, "data": tz}
+        time_data = resp.json()
+        # Format the report
+        report = f"The current time in {city} is {time_data.get('time')} ({time_data.get('timeZone')})."
+        
+        return {
+            "status": "success", 
+            "report": report, 
+            "data": {
+                "current_time": time_data.get('time'),
+                "timezone": time_data.get('timeZone'),
+                "date": time_data.get('date'),
+                "day_of_week": time_data.get('dayOfWeek')
+            }
+        }
     except (requests.RequestException, ValueError) as e:
         return {"status": "error", "error_message": str(e)}
 
