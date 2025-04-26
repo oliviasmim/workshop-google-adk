@@ -72,6 +72,20 @@ Enable Vertex AI API:
 gcloud services enable aiplatform.googleapis.com
 ```
 
+## Deploying the solution with Cloud Run
+
+Ensure you have authenticated with Google Cloud (gcloud auth login and gcloud config set project <your-project-id>).
+
+```shell
+adk deploy cloud_run \
+--project=gen-lang-client-0995102560\
+--region=us-central1 \
+--service_name=hello-world \
+--app_name=hello-world-ai \
+--with_ui \
+/1-hello-world
+```
+
 ## Credits
 
 Some folders and examples (e.g. `travel_helper/`) were from  
