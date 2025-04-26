@@ -24,7 +24,7 @@ def _geocode_city(city: str) -> Tuple[float, float]:
 # --- tools ---
 def get_weather(city: str) -> Dict[str, Any]:
     try:
-        lat, lon = _geocode_city(city)
+        lat, lon, _ = _geocode_city(city)
         resp = _session.get(
             BASE_FORECAST_URL,
             params={"latitude": lat, "longitude": lon, "current_weather": True},
@@ -42,7 +42,7 @@ def get_weather(city: str) -> Dict[str, Any]:
 
 def get_current_time(city: str) -> Dict[str, Any]:
     try:
-        lat, lon, tz = _geocode_city(city)
+        _, _, tz = _geocode_city(city)
         resp = _session.get(TIME_API_URL, params={"timeZone": tz}, timeout=TIMEOUT)
         resp.raise_for_status()
         time_data = resp.json()
@@ -62,10 +62,13 @@ def get_current_time(city: str) -> Dict[str, Any]:
     except (requests.RequestException, ValueError) as e:
         return {"status": "error", "error_message": str(e)}
 
+
+AUDIO_MODEL = "gemini-2.0-flash-audio-001"
+CONTENT_MODEL = "gemini-2.0-flash"
 # --- agent setup  ---
 root_agent = Agent(
     name="weather_time_agent",
-    model="gemini-2.0-flash",
+    model=CONTENT_MODEL,
     description="Agent to answer questions about the time and weather in a city.",
     instruction="""
 You are a specialized weather and time assistant that provides accurate information for cities worldwide.
@@ -93,3 +96,5 @@ Assistant: "In Paris, it's currently 18°C with wind speeds of 3.7 m/s (light br
 """,
     tools=[get_weather, get_current_time],
 )
+
+# for voice testing, dont forget to export SSL_CERT_FILE=$(python -m certifi)
